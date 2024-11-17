@@ -3,7 +3,7 @@ import random
 
 from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery, FSInputFile, ReplyKeyboardRemove, User
-from aiogram.filters import CommandStart, StateFilter
+from aiogram.filters import CommandStart, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State, default_state
 
@@ -211,10 +211,14 @@ async def nakr_ru(message: Message, state: FSMContext):
     await state.set_state(ChooseScheme2.ai2_ru)
 
 
-@user_router.message(ChooseScheme2.ai2_ru, F.text)
+@user_router.message(ChooseScheme2.ai2_ru, or_f(F.text.in_(['@']), lambda x: x.text.isdigit()))
 async def nakr2_ru(message: Message, state: FSMContext):
     await message.answer(text="Успешно ✅")
     await state.clear()
+
+@user_router.message(ChooseScheme2.ai2_ru)
+async def neud2_ru(message: Message):
+    await message.answer('Не успешно❌')
 
 
 @user_router.message(ChooseScheme2.ai2_ru, F.text == '🔙Назад')
@@ -229,10 +233,15 @@ async def nakr2_en(message: Message, state: FSMContext):
     await state.set_state(ChooseScheme2.ai2_en)
 
 
-@user_router.message(ChooseScheme2.ai2_en, F.text)
+@user_router.message(ChooseScheme2.ai2_en, or_f(F.text.in_(['@']), lambda x: x.text.isdigit()))
 async def nakr2e_en(message: Message, state: FSMContext):
     await message.answer(text="Successfully ✅")
     await state.clear()
+
+
+@user_router.message(ChooseScheme2.ai2_en)
+async def neud2_en(message: Message):
+    await message.answer('Not successful❌')
 
 
 @user_router.message(ChooseScheme2.ai2_en, F.text == '🔙Back')
@@ -247,10 +256,15 @@ async def nakr2_hi(message: Message, state: FSMContext):
     await state.set_state(ChooseScheme2.ai2_hi)
 
 
-@user_router.message(ChooseScheme2.ai2_hi, F.text)
+@user_router.message(ChooseScheme2.ai2_hi, or_f(F.text.in_(['@']), lambda x: x.text.isdigit()))
 async def nakr2e_hi(message: Message, state: FSMContext):
     await message.answer(text="सफलतापूर्वक ✅")
     await state.clear()
+
+
+@user_router.message(ChooseScheme2.ai2_hi)
+async def neud2_hi(message: Message):
+    await message.answer('सफल नहीं❌')
 
 
 @user_router.message(ChooseScheme2.ai2_en, F.text == '🔙पीछे')
