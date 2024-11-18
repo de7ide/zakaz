@@ -140,6 +140,24 @@ async def answ_ai_hi(message: Message, state: FSMContext):
     await state.set_state(ChooseScheme.ai_scrin_hi)
 
 
+@user_router.message(ChooseScheme.ai_scrin_ru, F.text == '🤖AI Анализ')
+async def del_st_ru(message: Message, state: FSMContext):
+    await message.answer('Отправьте ID')
+    await state.set_state(ChooseScheme.ai_ru)
+
+
+@user_router.message(ChooseScheme.ai_scrin_en, F.text == '🤖AI Analysis')
+async def del_st_en(message: Message, state: FSMContext):
+    await message.answer('Send ID')
+    await state.set_state(ChooseScheme.ai_en)
+
+
+@user_router.message(ChooseScheme.ai_scrin_hi, F.text == '🤖एआई विश्लेषण')
+async def del_st_ru(message: Message, state: FSMContext):
+    await message.answer('ऑप्शंस आईडी')
+    await state.set_state(ChooseScheme.ai_hi)
+
+
 @user_router.message(ChooseScheme.ai_scrin_ru, F.photo)
 async def ai_scrin_ru(message: Message, state: FSMContext, bot: Bot):
     await message.answer('Анализ...')
